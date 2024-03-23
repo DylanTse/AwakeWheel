@@ -1,6 +1,6 @@
 import React from 'react';
 
-function HomeScreen() {
+function Dashboard() {
   return (
     <div>
       <h2>Home Screen</h2>
@@ -9,4 +9,4 @@ function HomeScreen() {
   );
 }
 
-export default HomeScreen;
+export default Dashboard;

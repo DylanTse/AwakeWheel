@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import Dashboard from './Dashboard';
-import Photos from './Photos';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; // Import Link from react-router-dom
+import Dashboard from './Components/Dashboard';
+import Photos from './Components/Photos';
+import './App.css';
 
 function App() {
   return (
@@ -13,13 +14,15 @@ function App() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/data">Photos</Link>
+              <Link to="/photos">Photos</Link>
             </li>
           </ul>
         </nav>
 
-        <Route path="/" exact component={Dashboard} />
-        <Route path="/data" component={Photos} />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/photos" element={<Photos />} />
+        </Routes>
       </div>
     </Router>
   );

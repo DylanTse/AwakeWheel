@@ -1,32 +1,39 @@
 import React, { useState, useEffect } from 'react';
 
-function DataScreen() {
-  const [timestamp, setTimestamp] = useState(null);
+
+function Photos() {
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/data') 
-      .then(response => response.json())
-      .then(data => {
-        if (data && data.timestamp) {
-          setTimestamp(data.timestamp);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching timestamp:', error);
-      });
+    fetchData();
   }, []);
 
-  const formatDate = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleString('en-US');
-  }
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/data');
+      if (!response.ok) {
+        throw new Error('Failed to fetch data');
+      }
+      const data = await response.json();
+      console.log(data);
+      setImages(data);
+    }
+    catch (e) {
+      console.error("Error: ", e);
+    }
+  };
 
   return (
     <div>
       <h2>Data Screen</h2>
-      <p>Timestamp: {timestamp ? formatDate(timestamp) : 'Loading...'}</p>
+      
+      <div className="image-container">
+        {images.map((image, index) => (
+          <img src={`data:image/jpg;base64,${image}`} className='image'/>
+        ))}
+      </div>
     </div>
   );
 }
 
-export default DataScreen;
+export default Photos;

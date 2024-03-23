@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.image-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Dynamic grid with minimum width of 200px */
+  gap: 10px;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+}
