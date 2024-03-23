@@ -1,44 +1,26 @@
-from flask import Flask
-import requests
-import json
-import os
-from dotenv import load_dotenv
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
-
-load_dotenv()
-
-m_api_key = os.getenv("API_KEY")
-m_url = os.getenv("URL")
-
+from flask import Flask, jsonify
+from pymongo import MongoClient
 
 app = Flask(__name__)
 
-# MongoDB connection
+# Connect to MongoDB
+client = MongoClient('mongodb+srv://ataduri7:Midnight@cluster0.lv7rogd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+db = client['MainDB']
+collection = db['Pictures']
 
-@app.route('/')
+# Define endpoint to serve data
+@app.route('/data', methods=['GET'])
 def get_data():
-    # Example: Querying data from the collection
-    return {"message": "Hello, World!"}
+    data = list(collection.find({}, {'_id': 0}))  # Exclude _id field from the response
+    return jsonify({'data': data})
 
-@app.route('/get_photos')
-def get_photos():
-    url = m_url + "/action/find"
-    payload = json.dumps({
-        "collection": "Wheel",
-        "database": "Awake",
-        "dataSource": "Cluster0",
-        "projection": {
-            "base64Image": 1,
-        }
-    })
-    headers = {
-        'Content-Type': 'application/json',
-        'Access-Control-Request-Headers': '*',
-        'api-key': m_api_key,
-    }
-    response = requests.request("POST", url, headers=headers, data=payload)
-    return response.text
+# Define route for root URL
+@app.route('/', methods=['GET'])
+def home():
+    return "Welcome to my Flask app! Visit /data to access the data."
 
+# Run the Flask app
 if __name__ == '__main__':
     app.run(debug=True)
+
+
