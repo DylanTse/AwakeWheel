@@ -1,12 +1,22 @@
 // Screen2.js
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 
 export default function Screen2() {
+  
+  const numColumns = 3;
+  const windowWidth = Dimensions.get('window').width;
+  const colWidth = windowWidth / numColumns;
+
+
+  
+  
   return (
     <View style={styles.container}>
         <Text style={styles.heading}>Photos</Text>
-        <Text style={styles.text}>photos go here</Text>
+        <FlatList
+          
+        />
     </View>
   );
 }
