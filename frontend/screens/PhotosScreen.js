@@ -4,18 +4,18 @@ import { StyleSheet, View, Text, Dimensions } from 'react-native';
 
 export default function Screen2() {
   
-  const numColumns = 3;
-  const windowWidth = Dimensions.get('window').width;
-  const colWidth = windowWidth / numColumns;
-
-
-  
+  const NUM_COLUMNS = 3;
+  const WINDOW_WIDTH = Dimensions.get('window').width;
+  const COLUMN_WIDTH = WINDOW_WIDTH / NUM_COLUMNS;
   
   return (
     <View style={styles.container}>
-        <Text style={styles.heading}>Photos</Text>
         <FlatList
-          
+          data = {photos}
+          keyExtractor={item => item.id.toString()}
+          renderItem={renderPhotoItem}
+          numColumns={NUM_COLUMNS}
+          columnWrapperStyle={styles.columnWrapper}
         />
     </View>
   );
@@ -24,16 +24,16 @@ export default function Screen2() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
       backgroundColor: '#fff',
-      paddingLeft: 20,
-      paddingTop: 55,
     },
-    heading: {
-      fontSize: 40,
-      paddingBottom: 20,
+    photo: {
+      width: COLUMN_WIDTH,
+      height: COLUMN_WIDTH,
+      margin: 2,
     },
-    text: {
-      fontSize: 20,
-      paddingBottom: 10,
+    columnWrapper: {
+      justifyContent: 'space-between',
     }
   });
